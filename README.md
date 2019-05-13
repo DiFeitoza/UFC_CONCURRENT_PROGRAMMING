@@ -1,4 +1,4 @@
-# UFC_CONCURRENT_PROGRAMMING
+﻿# UFC_CONCURRENT_PROGRAMMING
 Repositório para disciplina 'Desenvolvimento de Software Concorrente' do curso de Engenharia de Software da UFC (2019.1)
 Professor: Jefferson Carvalho
 
