@@ -1,4 +1,4 @@
-package aula02;
+package aula02_introduction;
 
 import java.util.concurrent.Semaphore;
 
