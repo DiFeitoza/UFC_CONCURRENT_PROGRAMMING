@@ -2,7 +2,7 @@ package aula03_producer_consumer;
 
 import java.util.concurrent.Semaphore;
 
-public class Consumer extends Thread{
+public class Consumer extends Thread {
 	
 	int[] vetc;
 	String name;
