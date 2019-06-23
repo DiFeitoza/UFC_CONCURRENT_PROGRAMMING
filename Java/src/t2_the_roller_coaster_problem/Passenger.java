@@ -21,55 +21,59 @@ public class Passenger extends Thread {
 		this.allAshore = allAshore;
 	}
 	
-	public void run() {
+	public void board() {
+		try {
+			boardQueue.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
-		while(true) {
-			try {
-				boardQueue.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			//board();
-			System.out.println(namePass + " - embarcando");
-			
-			try {
-				mutex.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			boarders += 1;
-			
-			if(boarders == this.maxPass) {
-				allAboard.release();
-				boarders = 0;
-			}
-			
-			mutex.release();
-			
-			try {
-				unboardQueue.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			//unboard();
-			System.out.println(namePass + " - desembarcando");
-			
-			try {
-				mutex2.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			unboarders += 1;
-			if(unboarders == maxPass) { 
-				allAshore.release();
-				unboarders = 0;
-			}
+		System.out.println(namePass + " - embarcando");
+		
+		try {
+			mutex.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		boarders += 1;
+		
+		if(boarders == this.maxPass) {
+			allAboard.release();
+			boarders = 0;
+		}
+		
+		mutex.release();
+	}
+	
+	public void unboard() {
+		try {
+			unboardQueue.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(namePass + " - desembarcando");
+		
+		try {
+			mutex2.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		unboarders += 1;
+		if(unboarders == maxPass) { 
+			allAshore.release();
+			unboarders = 0;
+		}
 
-			mutex2.release();
+		mutex2.release();
+	}
+	
+	public void run() {
+		while(true) {
+			board();
+			unboard();
 		}
 	}
 }

@@ -7,10 +7,13 @@ public class MainRCP {
 	public MainRCP() {};
 	
 	public static void main(String[] args) {
-		int maxPass = 3;
+		int maxPass = 2;
+		int qtdCar = 2;
+		int idCar = -1;
 		
 		Semaphore mutex = new Semaphore(1);
 		Semaphore mutex2 = new Semaphore(1);
+		Semaphore semCar = new Semaphore(1);
 		
 		Semaphore boardQueue = new Semaphore(0);
 		Semaphore unboardQueue = new Semaphore(0);
@@ -18,12 +21,14 @@ public class MainRCP {
 		Semaphore allAboard = new Semaphore(0);
 		Semaphore allAshore = new Semaphore(0);
 		
-		RollerCoaster carRC = new RollerCoaster(maxPass, boardQueue, unboardQueue, allAboard, allAshore);
-		Passenger pass1 = new Passenger("1. Abel", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
-		Passenger pass2 = new Passenger("2. Bezebu", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
-		Passenger pass3 = new Passenger("3. Cain", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
-		Passenger pass4 = new Passenger("4. Dante", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
-		Passenger pass5 = new Passenger("5. Exodia", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
+		RollerCoaster carRC1 = new RollerCoaster("carRC1", idCar++, qtdCar, maxPass, semCar, boardQueue, unboardQueue, allAboard, allAshore);
+		RollerCoaster carRC2 = new RollerCoaster("carRC2", idCar++, qtdCar, maxPass, semCar, boardQueue, unboardQueue, allAboard, allAshore);
+		
+		Passenger pass1 = new Passenger("Abel", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
+		Passenger pass2 = new Passenger("Bezebu", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
+		Passenger pass3 = new Passenger("Cain", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
+		Passenger pass4 = new Passenger("Dante", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
+		Passenger pass5 = new Passenger("Exodia", maxPass, mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore);
 		
 		pass1.start();
 		pass2.start();
@@ -31,21 +36,7 @@ public class MainRCP {
 		pass4.start();
 		pass5.start();
 		
-		carRC.start();
+		carRC1.start();
+		carRC2.start();
 	}
 }
-
-/* car wait semFillp1
- * car wait semFillp2
- * car signal semInputp1
- * car signal semInputp2
- * car run
- * 
- * p1 wait semInputp1
- * p1 signal semFillp1
- * p1 run
- * 
- * p2 wait semInputp2
- * p2 signal semFillp2
- * p2 run
- */
