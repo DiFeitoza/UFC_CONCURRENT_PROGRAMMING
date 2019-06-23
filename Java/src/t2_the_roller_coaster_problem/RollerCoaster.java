@@ -12,7 +12,9 @@ public class RollerCoaster extends Thread {
 	static ArrayList<Semaphore> loadingArea = new ArrayList<Semaphore>();
 	static ArrayList<Semaphore> unloadingArea = new ArrayList<Semaphore>();
 	
-	public RollerCoaster(String nameCar, int idCar, int qtdCar, int maxPass, Semaphore semCar, Semaphore boardQueue, Semaphore unboardQueue, Semaphore allAboard, Semaphore allAshore) {
+	public RollerCoaster(String nameCar, int idCar, int qtdCar, int maxPass,
+			Semaphore semCar, Semaphore boardQueue, Semaphore unboardQueue,
+			Semaphore allAboard, Semaphore allAshore) {
 		this.nameCar = nameCar;
 		this.qtdCar = qtdCar;
 		this.maxPass = maxPass;
@@ -48,7 +50,13 @@ public class RollerCoaster extends Thread {
 	}
 	
 	public void play() {
-		System.out.println(nameCar + " - partindo");
+		System.out.println(nameCar + " - partindo\n");
+		
+		try {
+			Thread.sleep((long)(5000));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void unload() {
@@ -67,7 +75,7 @@ public class RollerCoaster extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println(nameCar + " - livre");
+		System.out.println(nameCar + " - livre\n");
 		
 		unloadingArea.get(next(idCar)).release();
 	}

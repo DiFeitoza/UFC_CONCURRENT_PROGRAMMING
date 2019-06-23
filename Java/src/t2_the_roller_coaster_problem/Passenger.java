@@ -9,8 +9,9 @@ public class Passenger extends Thread {
 	static int boarders, unboarders;
 	Semaphore mutex, mutex2, boardQueue, unboardQueue, allAboard, allAshore;	
 	
-	public Passenger(String namePass, int qtdPass, Semaphore mutex, Semaphore mutex2, Semaphore boardQueue,
-			Semaphore unboardQueue, Semaphore allAboard, Semaphore allAshore) {
+	public Passenger(String namePass, int qtdPass, Semaphore mutex,
+			Semaphore mutex2, Semaphore boardQueue, Semaphore unboardQueue,
+			Semaphore allAboard, Semaphore allAshore) {
 		this.namePass = namePass;
 		this.maxPass = qtdPass;
 		this.mutex = mutex;
@@ -22,13 +23,13 @@ public class Passenger extends Thread {
 	}
 	
 	public void board() {
-		try {
+		try {	
 			boardQueue.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println(namePass + " - embarcando");
+		System.out.println("  " + namePass + " - embarcando");
 		
 		try {
 			mutex.acquire();
@@ -53,7 +54,7 @@ public class Passenger extends Thread {
 			e.printStackTrace();
 		}
 		
-		System.out.println(namePass + " - desembarcando");
+		System.out.println("  " + namePass + " - desembarcando");
 		
 		try {
 			mutex2.acquire();
